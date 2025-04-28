@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>หนังสือเรียกร้องค่าสินไหมทดแทน</title>
+  <style>
+    body {
+      font-family: 'TH Sarabun New', sans-serif;
+      font-size: 18px;
+      padding: 40px;
+      background-color: #fdfdfd;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid #ccc;
+      padding: 20px;
+      background-color: #f0f8ff;
+      border-radius: 8px;
+    }
+    .logo {
+      width: 100px;
+      height: auto;
+    }
+    .header-text {
+      max-width: 80%;
+    }
+    .title {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #007bff;
+      background-color: #e6f0ff;
+      font-weight: bold;
+      text-align: right;
+      border-radius: 8px;
+    }
+    .section1 {
+      border: 2px solid red;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 6px;
+      background-color: #fff0f0;
+    }
+    .form-section {
+      margin-top: 30px;
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 8px;
+      background-color: #f9f9f9;
+    }
+    .form-row {
+      margin-bottom: 15px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .form-row span.label {
+      margin-right: 5px;
+      white-space: nowrap;
+    }
+    .input-line {
+      display: inline-block;
+      border-bottom: 1px dotted #000;
+      min-width: 100px;
+      height: 1.2em;
+      margin: 0 8px 4px 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="https://img.freepik.com/premium-vector/family-health-insurance-logo-designs-medical-protection_1093924-100.jpg" alt="Thai Insurance Logo" class="logo">
+    <div class="header-text">
+      <div>บริษัท ประกันชีวิต จำกัด (มหาชน)</div>
+      <div>กรุงเทพฯ 10400</div>
+      <div>โทร. 0 xxx xxxx โทรสาร 0 xxxx xxxx</div>
+      <div>www.example-insurance.com เลขทะเบียนนิติบุคคล 0123456789</div>
+    </div>
+  </div>
+
+  <div class="title">
+    หนังสือเรียกร้องค่าสินไหมทดแทน <br>
+    สาขา <span class="input-line">{{ form_data.branch }}</span> 
+    รหัสผู้รับ <span class="input-line">{{ form_data.recipient_code }}</span> 
+    วันที่ <span class="input-line">{{ form_data.date }}</span>
+  </div>
+
+  <div class="form-section">
+      <div class="form-row">
+          <span class="label">ชื่อ-นามสกุลผู้เอาประกันภัย</span> <span class="input-line">{{ form_data.insured_full_name }}</span>
+          <span class="label">อายุ</span> <span class="input-line">{{ form_data.insured_age }}</span>
+          <span class="label">เลขประจำตัวประชาชน</span> <span class="input-line">{{ form_data.insured_id_card }}</span>
+      </div>
+      <div class="form-row">
+          <span class="label">ที่อยู่ปัจจุบัน เลขที่</span> <span class="input-line">{{ form_data.current_address_number }}</span>
+          <span class="label">ซอย/ถนน</span> <span class="input-line">{{ form_data.current_address_street }}</span>
+          <span class="label">แขวง/ตำบล</span> <span class="input-line">{{ form_data.current_address_subdistrict }}</span>
+          <span class="label">เขต/อำเภอ</span> <span class="input-line">{{ form_data.current_address_district }}</span>
+      </div>
+      <div class="form-row">
+          <span class="label">จังหวัด</span> <span class="input-line">{{ form_data.current_address_province }}</span>
+          <span class="label">รหัสไปรษณีย์</span> <span class="input-line">{{ form_data.current_address_zipcode }}</span>
+          <span class="label">เบอร์โทรศัพท์</span> <span class="input-line">{{ form_data.phone_number }}</span>
+      </div>
+      <div class="form-row">
+          <span class="label">อาชีพ, ลักษณะงานที่ทำ</span> <span class="input-line">{{ form_data.occupation }}</span>
+          <span class="label">สถานที่ทำงาน</span> <span class="input-line">{{ form_data.workplace }}</span>
+      </div>
+  </div>
+
+
+</body>
+</html>

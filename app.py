@@ -1,15 +1,12 @@
-from flask import Flask, request, send_from_directory, jsonify, url_for, make_response
 import os
+from flask import Flask, request, send_from_directory, jsonify, url_for, make_response
 import json
 from jinja2 import Template
 
 app = Flask(__name__)
 
-OUTPUT_FOLDER = 'output_files'
-
-# ต้องแน่ใจว่าโฟลเดอร์ output_files มีอยู่
-if not os.path.exists(OUTPUT_FOLDER):
-    os.makedirs(OUTPUT_FOLDER)
+# ใช้ /tmp directory สำหรับ Vercel
+OUTPUT_FOLDER = '/tmp'  # Vercel ใช้ /tmp สำหรับการเขียนไฟล์ชั่วคราว
 
 with open('template.html', encoding='utf-8') as f:
     template_html = f.read()
@@ -28,9 +25,11 @@ def generate_form():
         filename = 'filled_form.html'
         filepath = os.path.join(OUTPUT_FOLDER, filename)
 
+        # เขียนไฟล์ไปยัง /tmp
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(rendered_html)
 
+        # ใช้ url_for เพื่อให้ได้ URL สำหรับการดาวน์โหลด
         download_url = url_for('download_file', filename=filename, _external=True)
 
         return jsonify({"download_url": download_url}), 200
@@ -41,11 +40,10 @@ def generate_form():
 @app.route('/download/<path:filename>', methods=['GET'])
 def download_file(filename):
     try:
-        response = make_response(send_from_directory(OUTPUT_FOLDER, filename))
-        # ใส่ header ngrok-skip-browser-warning ให้ทุก response
-        response.headers['ngrok-skip-browser-warning'] = '1'
-        return response
+        # ใช้ /tmp directory
+        return send_from_directory(OUTPUT_FOLDER, filename)
     except Exception as e:
         return jsonify({"error": str(e)}), 404
 
-app = app
+if __name__ == '__main__':
+    app.run(debug=True)

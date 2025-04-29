@@ -5,10 +5,10 @@
   <title>หนังสือเรียกร้องค่าสินไหมทดแทน</title>
   <style>
     body {
-      font-family: 'TH Sarabun New', sans-serif;
-      font-size: 18px;
-      padding: 40px;
-      background-color: #fdfdfd;
+    font-family: 'TH Sarabun New', sans-serif;
+    font-size: 18px;
+    padding: 40px;
+    background-color: #fdfdfd;
     }
     .header {
       display: flex;
@@ -18,16 +18,23 @@
       padding: 20px;
       background-color: #f0f8ff;
       border-radius: 8px;
+      gap: 20px; /* เพิ่มช่องว่างระหว่างส่วนต่างๆ */
+      flex-wrap: wrap; /* เผื่อหน้าจอเล็ก จะแตกลงบรรทัดใหม่ได้ */
     }
     .logo {
       width: 100px;
       height: auto;
+      flex-shrink: 0; /* ไม่ให้โลโก้ย่อ */
     }
     .header-text {
-      max-width: 80%;
+      flex: 2;
+      min-width: 200px;
+      text-align: left;
     }
     .title {
-      margin-top: 20px;
+      flex: 2;
+      min-width: 250px;
+      margin-top: 0;
       padding: 10px;
       border: 1px solid #007bff;
       background-color: #e6f0ff;
@@ -66,49 +73,151 @@
       height: 1.2em;
       margin: 0 8px 4px 8px;
     }
+    /* หัวข้อแดงตัวหนา */
+    .red-bold {
+      color: red;
+      font-weight: bold;
+      font-size: 20px;
+    }
+    .red-text {
+      color: red;
+      font-size: 20px;
+    }
+
+    /* สำหรับบรรทัดหัวข้อใหญ่ */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #fff0f0; /* สีพื้นหลังอ่อน ๆ */
+      padding: 10px 15px;
+      border-radius: 6px;
+      margin-bottom: 5px;
+    }
+
+    .section-header-left {
+      flex: 7;
+    }
+
+    .section-header-right {
+      flex: 3;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    /* เส้นคั่นหลังหัวข้อ */
+    .section-divider {
+      border: none;
+      height: 1px;
+      background-color: #ccc;
+      margin: 10px 0 20px 0;
+    }
+
   </style>
 </head>
 <body>
   <div class="header">
-    <img src="https://img.freepik.com/premium-vector/family-health-insurance-logo-designs-medical-protection_1093924-100.jpg" alt="Thai Insurance Logo" class="logo">
+    <img src="https://lh3.googleusercontent.com/proxy/lSIjDgr9YsWiT3pQxADlnzj5itoNX_giu-kPnIwFYH3SJzoqrq8Q6Y557QYBLK4A__w-xw-bgnv-JE5GMi4OF5tjXNYOKfPPu4WraqEFu_1_IuXdqc-TiKXcsJz6QU7JWooAXugZC9f7beCL6GB7-pGrK1o" alt="Thai Insurance Logo" class="logo">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1s-VxoKvCzJPvIbWyOLfl3lSSOCmZx2rtIQ&s" alt="Thai Insurance Logo" class="logo">
     <div class="header-text">
-      <div>บริษัท ประกันชีวิต จำกัด (มหาชน)</div>
-      <div>กรุงเทพฯ 10400</div>
-      <div>โทร. 0 xxx xxxx โทรสาร 0 xxxx xxxx</div>
-      <div>www.example-insurance.com เลขทะเบียนนิติบุคคล 0123456789</div>
+      <div>บริษัท ไทยประกันชีวิต จำกัด (มหาชน)</div>
+      <div>123 ถนนรัชดาภิเษก แขวงดินแดง กรุงเทพฯ 10400</div>
+      <div>โทร. 0 2247 0247 โทรสาร 0 2246 9946</div>
+      <div>www.thailife.com ทะเบียนเลขที่ 0107555000104</div>
+    </div>
+    <div class="title">
+      หนังสือเรียกร้องค่าสินไหมทดแทน <br>
+      สาขา <span class="input-line">{{ form_data.branch }}</span> 
+      รหัสผู้รับ <span class="input-line">{{ form_data.recipient_code }}</span> 
+      วันที่ <span class="input-line">{{ form_data.date }}</span>
     </div>
   </div>
 
-  <div class="title">
-    หนังสือเรียกร้องค่าสินไหมทดแทน <br>
-    สาขา <span class="input-line">{{ form_data.branch }}</span> 
-    รหัสผู้รับ <span class="input-line">{{ form_data.recipient_code }}</span> 
-    วันที่ <span class="input-line">{{ form_data.date }}</span>
-  </div>
-
   <div class="form-section">
-      <div class="form-row">
-          <span class="label">ชื่อ-นามสกุลผู้เอาประกันภัย</span> <span class="input-line">{{ form_data.insured_full_name }}</span>
-          <span class="label">อายุ</span> <span class="input-line">{{ form_data.insured_age }}</span>
-          <span class="label">เลขประจำตัวประชาชน</span> <span class="input-line">{{ form_data.insured_id_card }}</span>
+
+    <!-- หัวข้อใหญ่ (ส่วนที่ 1) -->
+    <div class="form-row section-header">
+      <div class="section-header-left">
+        <span class="red-bold">ส่วนที่ 1 สำหรับผู้เอาประกันภัย</span>
+        <span class="red-text">เพื่อประโยชน์ของท่านกรุณากรอกข้อมูลให้ครบถ้วนสมบูรณ์ พร้อมลงชื่อรับรองและลงชื่อยินยอมเปิดเผยข้อมูลส่วนบุคคล โดยผู้เอาประกันภัย/ผู้มีส่วนได้เสียเท่านั้น มิฉะนั้นบริษัทถือว่าการเรียกร้องนี้ยังไม่สมบูรณ์</span>
       </div>
-      <div class="form-row">
-          <span class="label">ที่อยู่ปัจจุบัน เลขที่</span> <span class="input-line">{{ form_data.current_address_number }}</span>
-          <span class="label">ซอย/ถนน</span> <span class="input-line">{{ form_data.current_address_street }}</span>
-          <span class="label">แขวง/ตำบล</span> <span class="input-line">{{ form_data.current_address_subdistrict }}</span>
-          <span class="label">เขต/อำเภอ</span> <span class="input-line">{{ form_data.current_address_district }}</span>
-      </div>
-      <div class="form-row">
-          <span class="label">จังหวัด</span> <span class="input-line">{{ form_data.current_address_province }}</span>
-          <span class="label">รหัสไปรษณีย์</span> <span class="input-line">{{ form_data.current_address_zipcode }}</span>
-          <span class="label">เบอร์โทรศัพท์</span> <span class="input-line">{{ form_data.phone_number }}</span>
-      </div>
-      <div class="form-row">
-          <span class="label">อาชีพ, ลักษณะงานที่ทำ</span> <span class="input-line">{{ form_data.occupation }}</span>
-          <span class="label">สถานที่ทำงาน</span> <span class="input-line">{{ form_data.workplace }}</span>
-      </div>
+      <!-- <div class="section-header-right">
+        <span class="input-line" style="width: 100%;">{{ form_data.section1_detail }}</span>
+      </div> -->
+    </div>
+    <hr class="section-divider">
+
+    <!-- ข้อมูลส่วนตัว -->
+    <div class="form-row">
+        <span class="label">ชื่อ-นามสกุลผู้เอาประกันภัย</span> <span class="input-line">{{ form_data.insured_full_name }}</span>
+        <span class="label">อายุ</span> <span class="input-line">{{ form_data.insured_age }}</span>
+        <span class="label">เลขประจำตัวประชาชน</span> <span class="input-line">{{ form_data.insured_id_card }}</span>
+    </div>
+    <div class="form-row">
+        <span class="label">ที่อยู่ปัจจุบัน เลขที่</span> <span class="input-line">{{ form_data.current_address_number }}</span>
+        <span class="label">ซอย/ถนน</span> <span class="input-line">{{ form_data.current_address_street }}</span>
+        <span class="label">แขวง/ตำบล</span> <span class="input-line">{{ form_data.current_address_subdistrict }}</span>
+        <span class="label">เขต/อำเภอ</span> <span class="input-line">{{ form_data.current_address_district }}</span>
+    </div>
+    <div class="form-row">
+        <span class="label">จังหวัด</span> <span class="input-line">{{ form_data.current_address_province }}</span>
+        <span class="label">รหัสไปรษณีย์</span> <span class="input-line">{{ form_data.current_address_zipcode }}</span>
+        <span class="label">เบอร์โทรศัพท์</span> <span class="input-line">{{ form_data.phone_number }}</span>
+    </div>
+    <div class="form-row">
+        <span class="label">อาชีพ, ลักษณะงานที่ทำ</span> <span class="input-line">{{ form_data.occupation }}</span>
+        <span class="label">สถานที่ทำงาน</span> <span class="input-line">{{ form_data.workplace }}</span>
+    </div>
+  
+    <!-- ประเภทเรียกร้อง -->
+    <hr>
+    <div class="form-row">
+      <strong>ประเภทเรียกร้อง:</strong><br>
+      <label><input type="checkbox"> เคลมเหตุใหม่</label>
+      <label><input type="checkbox"> เคลมเหตุต่อเนื่อง</label>
+      <label><input type="checkbox"> ค่ารักษาพยาบาล</label>
+      <label><input type="checkbox"> ค่ารักษาระยะยาว</label>
+      <label><input type="checkbox"> โรคร้ายแรง</label>
+      <label><input type="checkbox"> สูญเสียอวัยวะ/ทุพพลภาพ</label>
+    </div>
+  
+    <!-- กรณีอุบัติเหตุ -->
+    <hr>
+    <div class="form-row">
+      <strong>กรณีอุบัติเหตุ:</strong><br>
+      <span class="label">วันที่เกิดเหตุ</span> <span class="input-line">{{ form_data.accident_date }}</span>
+      <span class="label">เวลา</span> <span class="input-line">{{ form_data.accident_time }}</span>
+      <span class="label">สถานที่เกิดเหตุ</span> <span class="input-line">{{ form_data.accident_place }}</span>
+    </div>
+    <div class="form-row">
+      รายละเอียดการบาดเจ็บ<br>
+      <span class="input-line" style="width:100%; height:3em;">{{ form_data.injury_details }}</span>
+    </div>
+  
+    <!-- กรณีเจ็บป่วย -->
+    <hr>
+    <div class="form-row">
+      <strong>กรณีเจ็บป่วย:</strong><br>
+      <span class="label">วันที่เข้ารักษา</span> <span class="input-line">{{ form_data.hospital_admission_date }}</span>
+      <span class="label">วันที่ออก</span> <span class="input-line">{{ form_data.hospital_discharge_date }}</span>
+      <span class="label">สถานพยาบาลที่รักษา</span> <span class="input-line">{{ form_data.hospital_name }}</span>
+    </div>
+    <div class="form-row">
+      <span class="label"></span>โรคที่รักษา <span class="input-line">{{ form_data.disease_name }}</span> ตั้งแต่ปี พ.ศ. <span class="input-line">{{ form_data.disease_since_year }}</span>
+    </div>
+  
+    <!-- การรับเงิน -->
+    <hr>
+    <div class="form-row">
+      <strong>การรับเงิน:</strong><br>
+      <label><input type="checkbox"> โอนเงินเข้าบัญชี Prompt Pay ด้วยเลขประจำตัวประชาชน</label><br>
+      <label><input type="checkbox"> โอนเงินเข้าบัญชีธนาคารอื่น (ต้องแนบสำเนาหน้าสมุดบัญชี)</label><br>
+      <label><input type="checkbox"> รับเงินที่ 7-Eleven (ยอดไม่เกิน 10,000 บาท)</label><br>
+      <label><input type="checkbox"> อื่น ๆ <span class="input-line" style="width: 200px;"></span></label>
+    </div>
+  
   </div>
-
-
+  
 </body>
 </html>

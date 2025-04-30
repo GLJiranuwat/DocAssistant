@@ -18,7 +18,7 @@ def generate_form():
     try:
         form_data_bytes = request.data
         print("form data byte:", form_data_bytes)
-        form_data_str = form_data_bytes.decode('utf-8').replace('\xa0', ' ').strip()
+        form_data_str = form_data_bytes.decode('utf-8').replace('\xa0', ' ')
         print("form data string", form_data_str)
         form_data = json.loads(form_data_str)
         print("form data json:", form_data)
